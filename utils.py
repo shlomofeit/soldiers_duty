@@ -14,9 +14,9 @@ def is_valid_status(status: str) -> bool:
 
 
 def find_soldier_by_id(id: int) -> dict:
-    for i in soldiers:
-        if i['id'] == id:
-            return i    
+    for soldier in soldiers:
+        if soldier['id'] == id:
+            return soldier   
 
     return None
 
