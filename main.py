@@ -1,3 +1,6 @@
+from soldier_manager import add_solidier, remove_soldier, get_all_soldiers
+
+
 def show_menu() -> None:
     print('\n=== Soldiers Duty Management ===\n')
     print('  1. Add soldier.')
@@ -7,7 +10,7 @@ def show_menu() -> None:
     print('  5. Update duty status.')
     print('  6. View sildier duties.')
     print('  0. Exit.')
-    print('\n=== === === === === === === === ===\n')
+    print('\n===*===*===*===*===*===*===*===*===\n')
 show_menu()
 
 
@@ -16,47 +19,35 @@ def get_user_choice() -> str:
 
 
 def handle_add_soldier() -> None:
-    """
-    מטפלת בתהליך הוספת חייל חדש.
-    מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
-    
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    מפרידה בין הקלט/פלט לבין הלוגיקה העסקית.
-    main.py אחראי על אינטראקציה עם המשתמש,
-    soldier_manager.py אחראי על הלוגיקה.
-    """
-    pass
+    soldier_id = int(input('Enter soldier ID:\n>>> '))
+    soldier_name = input('Enter soldier name:\n>>> ')
+
+    try:
+        add_solidier(soldier_id, soldier_name)
+        print('Soldier added successfully.')
+    except (ValueError, KeyError) as e:
+        print(f'Error: {e}')
 
 
 def handle_remove_soldier() -> None:
-    """
-    מטפלת בתהליך הסרת חייל.
-    מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
-    
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    הפרדה בין UI לבין לוגיקה עסקית.
-    """
-    pass
+    soldier_id = int(input('Enter soldier ID:\n>>> '))
+
+    try:
+        remove_soldier(soldier_id)
+        print('Soldier removed successfully.')
+    except (ValueError, KeyError) as e:
+        print(f'Error: {e}')
 
 
 def handle_view_soldiers() -> None:
-    """
-    מטפלת בתהליך הצגת כל החיילים.
-    קוראת לפונקציה המתאימה ומציגה את התוצאה.
+    soldiers = get_all_soldiers()
+
+    if not soldier:
+            print('No soldiers.')
+            return
     
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    הפרדה בין קבלת הנתונים לבין הצגתם.
-    """
-    pass
+    for soldier in soldiers.items():
+        print(f'{soldier[0]}: {soldier[1]}')
 
 
 def handle_add_duty() -> None:
