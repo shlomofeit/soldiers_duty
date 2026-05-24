@@ -23,3 +23,7 @@ def remove_soldier(soldier_id: int):
         if soldier['id'] == soldier_id:
             del soldiers[index]
             break
+
+
+def get_all_soldiers() -> list:
+    return soldiers
