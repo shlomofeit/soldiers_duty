@@ -1,4 +1,6 @@
 from soldier_manager import add_solidier, remove_soldier, get_all_soldiers
+from duty_manager import add_duty_to_soldier, update_duty_status, get_soldier_duties
+import time
 
 
 def show_menu() -> None:
@@ -11,7 +13,6 @@ def show_menu() -> None:
     print('  6. View sildier duties.')
     print('  0. Exit.')
     print('\n===*===*===*===*===*===*===*===*===\n')
-show_menu()
 
 
 def get_user_choice() -> str:
@@ -21,6 +22,7 @@ def get_user_choice() -> str:
 def handle_add_soldier() -> None:
     soldier_id = int(input('Enter soldier ID:\n>>> '))
     soldier_name = input('Enter soldier name:\n>>> ')
+    time.sleep(1)
 
     try:
         add_solidier(soldier_id, soldier_name)
@@ -31,6 +33,7 @@ def handle_add_soldier() -> None:
 
 def handle_remove_soldier() -> None:
     soldier_id = int(input('Enter soldier ID:\n>>> '))
+    time.sleep(1)
 
     try:
         remove_soldier(soldier_id)
@@ -41,66 +44,91 @@ def handle_remove_soldier() -> None:
 
 def handle_view_soldiers() -> None:
     soldiers = get_all_soldiers()
+    time.sleep(1)
 
-    if not soldier:
+    if not soldiers:
             print('No soldiers.')
             return
     
-    for soldier in soldiers.items():
-        print(f'{soldier[0]}: {soldier[1]}')
+    for soldier in soldiers:
+        print(f"{soldier['id']} - {soldier['name']}")
 
 
 def handle_add_duty() -> None:
-    """
-    מטפלת בתהליך הוספת תורנות לחייל.
-    מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
+    soldier_id = int(input('Enter oldier ID:\n>>> '))
+    duty_name = input('Enter duty name:\n>>> ')
+    day = input('Enter the duty day:\n>>> ')
+    time.sleep(1)
     
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    הפרדה בין UI לבין לוגיקה עסקית.
-    """
-    pass
+    try:
+        add_duty_to_soldier(soldier_id, duty_name, day)
+        print(f'The duty added successfully:\n')
+        print(f' * Soldier ID: {soldier_id}')
+        print(f' * Duty name: {duty_name}')
+        print(f' * Day: {day}')
+        print(f' * Status: Pending')
+
+    except (ValueError, KeyError) as e:
+        print(f'Error: {e}')
 
 
 def handle_update_duty_status() -> None:
-    """
-    מטפלת בתהליך עדכון סטטוס תורנות.
-    מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
+    soldier_id = int(input('Enter oldier ID:\n>>> '))
+    duty_name = input('Enter duty name:\n>>> ')
+    new_status = input('Enter new status:\n>>> ')
+    time.sleep(1)
     
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    הפרדה בין UI לבין לוגיקה עסקית.
-    """
-    pass
+    try:
+        update_duty_status(soldier_id, duty_name, new_status)
+        print(f'The duty updated successfully:\n')
+        print(f' * Soldier ID: {soldier_id}')
+        print(f' * Duty name: {duty_name}')
+        print(f' * New status: {new_status}')
+        
+    except (ValueError, KeyError) as e:
+        print(f'Error: {e}')
 
 
 def handle_view_soldier_duties() -> None:
-    """
-    מטפלת בתהליך הצגת תורנויות של חייל.
-    מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
-    
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    הפרדה בין UI לבין לוגיקה עסקית.
-    """
-    pass
+    soldier_id = int(input('Enter oldier ID:\n>>> '))
+    time.sleep(1)
+
+    try:
+        duty = get_soldier_duties(soldier_id)
+        for i in duty:
+            print(i['name'])
+            print(i['day'])
+            print(i['status'])
+            print('=====\n')
+
+    except (ValueError, KeyError) as e:
+        print(f'Error: {e}')
 
 
 def main() -> None:
-    """
-    הפונקציה הראשית של התוכנית.
-    מריצה לולאה ראשית שמציגה תפריט, מקבלת בחירה ומפעילה פעולה.
-    
-    מקבלת: כלום
-    מחזירה: כלום
-    
-    למה הפונקציה קיימת:
-    נקודת הכניסה לתוכנית. מנהלת את הזרימה הראשית.
-    """
-    pass
+    while True:
+        show_menu()
+        choice = get_user_choice()
+        print('')
+
+        if choice == '1':
+            handle_add_soldier()
+        elif choice == '2':
+            handle_remove_soldier()
+        elif choice == '3':
+            handle_view_soldiers()
+        elif choice == '4':
+            handle_add_duty()
+        elif choice == '5':
+            handle_update_duty_status()
+        elif choice == '6':
+            handle_view_soldier_duties()
+        elif choice == '0':
+            break
+        else:
+            print('Invalid Choice. pls try again.\n\n')
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
