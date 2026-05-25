@@ -1,3 +1,5 @@
+# https://github.com/shlomofeit/soldiers_duty
+
 from soldier_manager import add_solidier, remove_soldier, get_all_soldiers
 from duty_manager import add_duty_to_soldier, update_duty_status, get_soldier_duties
 import time
@@ -84,7 +86,7 @@ def handle_update_duty_status() -> None:
         print(f' * Soldier ID: {soldier_id}')
         print(f' * Duty name: {duty_name}')
         print(f' * New status: {new_status}')
-        
+
     except (ValueError, KeyError) as e:
         print(f'Error: {e}')
 
